@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-	var links = null;
-
   // Load Links
 	clippy.load('Links', function(agent) {
 			agent.show();
