@@ -1,19 +1,50 @@
 $(document).ready(function () {
 
-  // Load Links
-	clippy.load('Links', function(agent) {
-			agent.show();
+  console.log("Ajai Gill 1015577")
 
+	$("#PostUser").click(function(event){
 
-			//Link's ears go whoop
-	    $('#alert-button').click(function () {
-				agent.play('Alert');
-	    });
-
-			//Link smears your screen with paint *sigh*
-			$('#artsy-button').click(function () {
-				agent.play('GetArtsy');
-	    });
-
+    $.ajax({
+		  type: "POST",
+		  url: '/user',
+		  success: function(result){
+        $("#RequestResult").html(result);
+      }
 		});
+	});
+
+  $("#GetUser").click(function(event){
+
+    $.ajax({
+		  type: "GET",
+		  url: '/user',
+		  success: function(result){
+        $("#RequestResult").html(result);
+        console.log(result);
+      }
+		});
+	});
+
+  $("#PutUser").click(function(event){
+
+    $.ajax({
+		  type: "PUT",
+		  url: '/user',
+		  success: function(result){
+        $("#RequestResult").html(result);
+      }
+		});
+	});
+
+  $("#DeleteUser").click(function(event){
+
+    $.ajax({
+		  type: "DELETE",
+		  url: '/user',
+		  success: function(result){
+        $("#RequestResult").html(result);
+      }
+		});
+	});
+
 });
