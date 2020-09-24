@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__, static_url_path='')
 #app.debug = True
@@ -13,10 +13,18 @@ def index(name=None):
 @app.route('/user', methods = ['GET', 'POST', 'PUT', 'DELETE'])
 def login():
     if request.method == 'POST':
-        return ('Trying to POST user!', 200)
+        print('recieved a POST request!')
+        message = 'Trying to POST user!'
+        return jsonify(message)
     elif request.method == 'PUT':
-        return  ('Trying to PUT user!', 200)
+        print('recieved a PUT request!')
+        message = 'Trying to PUT user!'
+        return jsonify(message)
     elif request.method == 'DELETE':
-        return  ('Trying to DELETE user!', 200)
+        print('recieved a DELETE request!')
+        message = 'Trying to DELETE user!'
+        return jsonify(message)
     else:
-        return ('Trying to GET user!', 200)
+        print('recieved a GET request!')
+        message = 'Trying to GET user!'
+        return jsonify(message)

@@ -20,7 +20,6 @@ $(document).ready(function () {
 		  url: '/user',
 		  success: function(result){
         $("#RequestResult").html(result);
-        console.log(result);
       }
 		});
 	});
