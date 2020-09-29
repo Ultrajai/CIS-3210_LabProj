@@ -4,9 +4,15 @@ $(document).ready(function () {
 
 	$("#PostUser").click(function(event){
 
+    var data = {username : $("#username").val(), password : $("#password").val()}
+    console.log(data);
+
     $.ajax({
 		  type: "POST",
 		  url: '/user',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json',
 		  success: function(result){
         $("#RequestResult").html(result);
       }
