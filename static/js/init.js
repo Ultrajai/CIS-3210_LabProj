@@ -5,40 +5,66 @@ $(document).ready(function () {
 	$("#PostUser").click(function(event){
 
     var data = {username : $("#username").val(), password : $("#password").val()}
-    console.log(data);
 
-    $.ajax({
-		  type: "POST",
-		  url: '/user',
-      data: JSON.stringify(data),
-      dataType: 'json',
-      contentType: 'application/json',
-		  success: function(result){
-        $("#RequestResult").html(result);
-      }
-		});
+    if(data.username === "" || data.password === "")
+    {
+      $("#RequestResult").html('One or more fields are empty');
+    }
+    else{
+      $.ajax({
+  		  type: "POST",
+  		  url: '/createUser',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+  		  success: function(result){
+          $("#RequestResult").html(result);
+        }
+  		});
+    }
 	});
 
-  $("#GetUser").click(function(event){
+  $("#LoginUser").click(function(event){
+    var data = {username : $("#username").val(), password : $("#password").val()}
 
-    $.ajax({
-		  type: "GET",
-		  url: '/user',
-		  success: function(result){
-        $("#RequestResult").html(result);
-      }
-		});
+    if(data.username === "" || data.password === "")
+    {
+      $("#RequestResult").html('One or more fields are empty');
+    }
+    else{
+      $.ajax({
+  		  type: "POST",
+  		  url: '/user',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+  		  success: function(result){
+          $("#RequestResult").html(result.message + " you are logged in as session #" + result.sessionID);
+        }
+  		});
+    }
 	});
 
   $("#PutUser").click(function(event){
 
-    $.ajax({
-		  type: "PUT",
-		  url: '/user',
-		  success: function(result){
-        $("#RequestResult").html(result);
-      }
-		});
+    var data = {username : $("#username").val(), oldPassword : $("#oldPassword").val(), newPassword : $("#newPassword").val()}
+
+    if(data.username === "" || data.oldPassword === "" || data.newPassword === '')
+    {
+      $("#RequestResult").html('One or more fields are empty');
+    }
+    else{
+      $.ajax({
+  		  type: "PUT",
+  		  url: '/user',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+  		  success: function(result){
+          $("#RequestResult").html(result);
+        }
+  		});
+    }
 	});
 
   $("#DeleteUser").click(function(event){
