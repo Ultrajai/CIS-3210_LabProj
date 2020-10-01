@@ -1,3 +1,5 @@
+//var sessionID = -1;
+
 $(document).ready(function () {
 
   console.log("Ajai Gill 1015577")
@@ -13,7 +15,7 @@ $(document).ready(function () {
     else{
       $.ajax({
   		  type: "POST",
-  		  url: '/createUser',
+  		  url: '/user',
         data: JSON.stringify(data),
         dataType: 'json',
         contentType: 'application/json',
@@ -24,25 +26,24 @@ $(document).ready(function () {
     }
 	});
 
-  $("#LoginUser").click(function(event){
-    var data = {username : $("#username").val(), password : $("#password").val()}
-
-    if(data.username === "" || data.password === "")
-    {
-      $("#RequestResult").html('One or more fields are empty');
-    }
-    else{
+  $("#GetUser").click(function(event){
       $.ajax({
-  		  type: "POST",
+  		  type: "GET",
   		  url: '/user',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
   		  success: function(result){
-          $("#RequestResult").html(result.message + " you are logged in as session #" + result.sessionID);
+
+          var html = "<table class='table table-dark'><tr><th>Username</th><th>Password</th></tr>"
+          for (var i = 0; i < result.results.length; i++) {
+            html = html + "<tr><td>" + result.results[i][0] + "</td><td>" + result.results[i][1] + "<td></tr>";
+          }
+
+          html = html + "</table>"
+
+          $("#RequestResult").html(result.message +"<br>"+html);
+
+          //sessionID = result.sessionID;
         }
   		});
-    }
 	});
 
   $("#PutUser").click(function(event){
@@ -69,13 +70,23 @@ $(document).ready(function () {
 
   $("#DeleteUser").click(function(event){
 
-    $.ajax({
-		  type: "DELETE",
-		  url: '/user',
-		  success: function(result){
-        $("#RequestResult").html(result);
-      }
-		});
-	});
+    var data = {username : $("#username").val(), password : $("#password").val()}
 
+    if(data.username === "" || data.password === "")
+    {
+      $("#RequestResult").html('One or more fields are empty');
+    }
+    else{
+      $.ajax({
+  		  type: "DELETE",
+  		  url: '/user',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+  		  success: function(result){
+          $("#RequestResult").html(result);
+        }
+  		});
+    }
+  });
 });
