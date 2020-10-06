@@ -26,7 +26,14 @@ $(document).ready(function () {
         dataType: 'json',
         contentType: 'application/json',
   		  success: function(result){
-          location.reload(true);
+          if(result.error != 1)
+          {
+            location.reload(true);
+          }
+          else
+          {
+            $("#RequestResult").html(result.message);
+          }
         }
   		});
     }
