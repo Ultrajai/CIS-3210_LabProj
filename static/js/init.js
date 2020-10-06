@@ -10,7 +10,7 @@ $(document).ready(function () {
   console.log("There are more ways to prevent attack but the best ways are to use prepared statements with parameterized queries or stored procedures.")
   console.log("this information was obtained at https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html")
 
-	$("#PostUser").click(function(event){
+	$("#Login").click(function(event){
 
     var data = {username : $("#username").val(), password : $("#password").val()}
 
@@ -26,73 +26,20 @@ $(document).ready(function () {
         dataType: 'json',
         contentType: 'application/json',
   		  success: function(result){
-          $("#RequestResult").html(result);
+          location.reload(true);
         }
   		});
     }
 	});
 
-  $("#GetUser").click(function(event){
-      $.ajax({
-  		  type: "GET",
-  		  url: '/user',
-  		  success: function(result){
-
-          var html = "<table class='table table-dark'><tr><th>Username</th><th>Password</th></tr>"
-          for (var i = 0; i < result.results.length; i++) {
-            html = html + "<tr><td>" + result.results[i][0] + "</td><td>" + result.results[i][1] + "<td></tr>";
-          }
-
-          html = html + "</table>"
-
-          $("#RequestResult").html(result.message +"<br>"+html);
-
-          //sessionID = result.sessionID;
-        }
-  		});
-	});
-
-  $("#PutUser").click(function(event){
-
-    var data = {username : $("#username").val(), oldPassword : $("#oldPassword").val(), newPassword : $("#newPassword").val()}
-
-    if(data.username === "" || data.oldPassword === "" || data.newPassword === '')
-    {
-      $("#RequestResult").html('One or more fields are empty');
-    }
-    else{
-      $.ajax({
-  		  type: "PUT",
-  		  url: '/user',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
-  		  success: function(result){
-          $("#RequestResult").html(result);
-        }
-  		});
-    }
-	});
-
-  $("#DeleteUser").click(function(event){
-
-    var data = {username : $("#username").val(), password : $("#password").val()}
-
-    if(data.username === "" || data.password === "")
-    {
-      $("#RequestResult").html('One or more fields are empty');
-    }
-    else{
+  $("#Logout").click(function(event){
       $.ajax({
   		  type: "DELETE",
   		  url: '/user',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
   		  success: function(result){
-          $("#RequestResult").html(result);
+          location.reload(true);
         }
   		});
-    }
-  });
+	});
+
 });
