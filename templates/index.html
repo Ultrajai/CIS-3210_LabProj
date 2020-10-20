@@ -31,7 +31,22 @@
 
 			<main role="main" class="inner cover">
 				<h1 class="cover-heading">CIS*3210 Lab 6</h1>
-				{% if not session['logged_in'] %}
+				<div>
+					<p class="lead">Type a location to get restaurants and other businesses near that location listed!</p>
+				</div>
+				<br>
+				<div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">Location</span>
+						</div>
+						<input type="text" id="Location" class="form-control" placeholder="Location" aria-label="Location" aria-describedby="basic-addon1">
+					</div>
+					<p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
+					<button id="GetBusinesses" class="btn btn-primary">Get Businesses In Location</button>
+					<div id="RequestResult" class="lead">No Request Made...</div>
+				</div>
+				<!-- {% if not session['logged_in'] %}
 				<p class="lead">Create an account or log in to your account below</p>
 				<div>
 				  <div class="form-group">
@@ -45,24 +60,11 @@
 				  <button id="Login" class="btn btn-primary">Login/Create Account</button>
 				</div>
 				<div id="RequestResult" class="lead">No Request Made...</div>
-				{% else %}
-				<div>
-					<p class="lead">Welcome {{ session['username'] }}! Type a location to get restaurants and other businesses near that location listed!</p>
-					<button id="Logout" class="btn btn-primary">Logout</button>
-			  </div>
-				<br>
-				<div>
-					<div class="input-group mb-3">
-					  <div class="input-group-prepend">
-					    <span class="input-group-text" id="basic-addon1">Location</span>
-					  </div>
-					  <input type="text" id="Location" class="form-control" placeholder="Location" aria-label="Location" aria-describedby="basic-addon1">
-					</div>
-					<p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
-					<button id="GetBusinesses" class="btn btn-primary">Get Businesses In Location</button>
-					<div id="RequestResult" class="lead">No Request Made...</div>
-				</div>
-				{% endif %}
+				{% else %} -->
+				<!-- Welcome {{ session['username'] }}!-->
+					<!--<button id="Logout" class="btn btn-primary">Logout</button>-->
+
+				<!--{% endif %}-->
 			</main>
 
 
