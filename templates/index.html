@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="shortcut icon" href="#">
-		<title>CIS*3210 Lab 4</title>
+		<title>CIS*3210 Lab 6</title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 			<header class="masthead mb-auto">
 				<div class="inner">
-					<h3 class="masthead-brand">CIS*3210 Lab 4</h3>
+					<h3 class="masthead-brand">CIS*3210 Lab 6</h3>
 					<nav class="nav nav-masthead justify-content-center">
 						<a class="nav-link active" href="#">Home</a>
 						<a class="nav-link" href="#">Features</a>
@@ -30,7 +30,7 @@
 			</header>
 
 			<main role="main" class="inner cover">
-				<h1 class="cover-heading">CIS*3210 Lab 4</h1>
+				<h1 class="cover-heading">CIS*3210 Lab 6</h1>
 				{% if not session['logged_in'] %}
 				<p class="lead">Create an account or log in to your account below</p>
 				<div>
@@ -46,8 +46,22 @@
 				</div>
 				<div id="RequestResult" class="lead">No Request Made...</div>
 				{% else %}
-				<p class="lead">Welcome {{ session['username'] }}!</p>
-				<button id="Logout" class="btn btn-primary">Logout</button>
+				<div>
+					<p class="lead">Welcome {{ session['username'] }}! Type a location to get restaurants and other businesses near that location listed!</p>
+					<button id="Logout" class="btn btn-primary">Logout</button>
+			  </div>
+				<br>
+				<div>
+					<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text" id="basic-addon1">Location</span>
+					  </div>
+					  <input type="text" id="Location" class="form-control" placeholder="Location" aria-label="Location" aria-describedby="basic-addon1">
+					</div>
+					<p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
+					<button id="GetBusinesses" class="btn btn-primary">Get Businesses In Location</button>
+					<div id="RequestResult" class="lead">No Request Made...</div>
+				</div>
 				{% endif %}
 			</main>
 

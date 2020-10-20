@@ -1,4 +1,3 @@
-//var sessionID = -1;
 
 $(document).ready(function () {
 
@@ -34,6 +33,38 @@ $(document).ready(function () {
           {
             $("#RequestResult").html(result.message);
           }
+        }
+  		});
+    }
+	});
+
+  $("#GetBusinesses").click(function(event){
+
+    var data = {location : $("#Location").val()}
+
+    if(data.location === "")
+    {
+      $("#RequestResult").html('The field is empty');
+    }
+    else{
+      $.ajax({
+  		  type: "POST",
+  		  url: '/getBusinesses',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+  		  success: function(result){
+
+            let table = '<table class="table table-striped table-dark"><thead><tr><th scope="col">Name</th><th scope="col">Location</th><th scope="col">Rating</th><th scope="col">Image</th></tr></thead><tbody>'
+
+            for (var i = 0; i < result.businesses.length; i++) {
+              const htmlString = '<tr><td>' + result.businesses[i].name + '</td><td>' + result.businesses[i].location.address1 + '</td><td>' + result.businesses[i].rating + '</td><td><img src="' + result.businesses[i].image_url + '" style="width:150px;height:150px;"></img></td></tr>';
+
+              table = table + htmlString;
+            }
+
+            table.concat('</tbody></table>');
+            $("#RequestResult").html(table);
         }
   		});
     }
