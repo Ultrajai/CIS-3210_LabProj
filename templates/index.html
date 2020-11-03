@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="shortcut icon" href="#">
-		<title>CIS*3210 Lab 6</title>
+		<title>CIS*3210 Lab 8</title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -17,10 +17,10 @@
 		<link href="/css/cover.css" rel="stylesheet">
 	</head>
 	<body class="text-center">
-		<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+		<div class="d-flex w-100 h-100 p-3 mx-auto flex-column" style="max-width: 60em;">
 			<header class="masthead mb-auto">
 				<div class="inner">
-					<h3 class="masthead-brand">CIS*3210 Lab 6</h3>
+					<h3 class="masthead-brand">CIS*3210 Lab 8</h3>
 					<nav class="nav nav-masthead justify-content-center">
 						<a class="nav-link active" href="#">Home</a>
 						<a class="nav-link" href="#">Features</a>
@@ -30,42 +30,78 @@
 			</header>
 
 			<main role="main" class="inner cover">
-				<h1 class="cover-heading">CIS*3210 Lab 6</h1>
+				<h1 class="cover-heading">CIS*3210 Lab 8</h1>
 				<div>
 					<p class="lead">Type a location to get restaurants and other businesses near that location listed!</p>
 				</div>
 				<br>
-				<div>
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="basic-addon1">Location</span>
+				<div class="card overflow-auto" style="height: 42rem;">
+				  <div class="card-header blackText">
+						<form class="form-inline">
+							<input class="form-control mr-sm-2" type="search" aria-describedby="searchHelp" placeholder="Search Location" style="width: 26rem;">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+						</form>
+						<small id="searchHelp" class="form-text text-muted text-left">Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</small>
+				  </div>
+				  <div class="card-body blackText">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<div class="card">
+										<img class="card-img-top" src="..." alt="Card image cap">
+										<div class="card-body">
+											<h5 class="card-title">Card title</h5>
+											<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Go somewhere</a>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card">
+										<img class="card-img-top" src="..." alt="Card image cap">
+										<div class="card-body">
+											<h5 class="card-title">Card title</h5>
+											<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Go somewhere</a>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card">
+										<img class="card-img-top" src="..." alt="Card image cap">
+										<div class="card-body">
+											<h5 class="card-title">Card title</h5>
+											<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Go somewhere</a>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<input type="text" id="Location" class="form-control" placeholder="Location" aria-label="Location" aria-describedby="basic-addon1">
-					</div>
-					<p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
-					<button id="GetBusinesses" class="btn btn-primary">Get Businesses In Location</button>
-					<div id="RequestResult" class="lead">No Request Made...</div>
+				  </div>
 				</div>
-				<!-- {% if not session['logged_in'] %}
-				<p class="lead">Create an account or log in to your account below</p>
 				<div>
-				  <div class="form-group">
-				    <label for="username">Username</label>
-				    <input type="text" class="form-control" id="username">
-				  </div>
-				  <div class="form-group">
-				    <label for="password">Password</label>
-				    <input type="password" class="form-control" id="password">
-				  </div>
-				  <button id="Login" class="btn btn-primary">Login/Create Account</button>
 				</div>
-				<div id="RequestResult" class="lead">No Request Made...</div>
-				{% else %} -->
-				<!-- Welcome {{ session['username'] }}!-->
-					<!--<button id="Logout" class="btn btn-primary">Logout</button>-->
-
-				<!--{% endif %}-->
 			</main>
+
+
+
+			<!-- Modal -->
+			<div class="modal fade blackText" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        SOME STUFF ABOUT THE BUSINESS
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 
 
 			<footer class="mastfoot mt-auto">
@@ -81,3 +117,22 @@
 
 	</body>
 </html>
+<!-- {% if not session['logged_in'] %}
+<p class="lead">Create an account or log in to your account below</p>
+<div>
+	<div class="form-group">
+		<label for="username">Username</label>
+		<input type="text" class="form-control" id="username">
+	</div>
+	<div class="form-group">
+		<label for="password">Password</label>
+		<input type="password" class="form-control" id="password">
+	</div>
+	<button id="Login" class="btn btn-primary">Login/Create Account</button>
+</div>
+<div id="RequestResult" class="lead">No Request Made...</div>
+{% else %} -->
+<!-- Welcome {{ session['username'] }}!-->
+	<!--<button id="Logout" class="btn btn-primary">Logout</button>-->
+
+<!--{% endif %}-->

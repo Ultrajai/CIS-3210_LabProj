@@ -21,7 +21,7 @@ SEARCH_PATH = '/v3/businesses/search'
 app.secret_key = b'\x98!\x83G\xd9\xea\x9d\xb1$p\xb9\xec\xee0AJ'
 app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
 
-# establishes db connection and gets a cursor to start accepting inputs
+"""# establishes db connection and gets a cursor to start accepting inputs
 db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
                  user="ajai",
                  passwd="1015577",
@@ -32,7 +32,7 @@ c = db.cursor()
 c.execute("DROP TABLE Users;")
 db.commit()
 c.execute("CREATE TABLE Users (username VARCHAR(255) NOT NULL PRIMARY KEY, password VARCHAR(255) NOT NULL);")
-db.commit()
+db.commit()"""
 
 
 def RequestData(host, path, api_key, url_params=None):
@@ -76,7 +76,7 @@ def GetBusinesses(name=None):
     if request.method == 'POST':
         req = json.loads(json.dumps(request.get_json()))
         return jsonify(SearchBusinesses(API_KEY, req['location']))
-
+"""
 @app.route('/user', methods = ['DELETE', 'POST'])
 def Login(name=None):
     if request.method == 'POST':
@@ -108,3 +108,4 @@ def Login(name=None):
         session.clear()
         message = 'Logged out!'
         return jsonify(message)
+"""
