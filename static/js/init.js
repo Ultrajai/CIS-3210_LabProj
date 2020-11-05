@@ -9,7 +9,6 @@ function loadReviews(element)
     dataType: 'json',
     contentType: 'application/json',
     success: function(response){
-      console.log(response)
 
       $('#' +element.attributes['data-to'].value).empty();
 

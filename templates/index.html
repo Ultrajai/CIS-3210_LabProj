@@ -35,21 +35,28 @@
 					<p class="lead">Type a location to get restaurants and other businesses near that location listed!</p>
 				</div>
 				<br>
-				<div class="card overflow-auto" style="height: 42rem;">
+				<div class="card" style="height: 42rem;">
 				  <div class="card-header blackText">
-						<form class="form-inline">
+						<div class="form-inline">
 							<input class="form-control mr-sm-2" type="search" aria-describedby="searchHelp" placeholder="Search Location" style="width: 26rem;" id="Location">
 							<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="GetBusinesses">Search</button>
-							<label for="amount">Amount of results:</label>
+							<label style="padding-left:20px;padding-right: 5px;" for="amount"># of results:</label>
 							<select name="amount" id="amount">
+								<option value="3">3</option>
+								<option value="6">6</option>
+						    <option value="9">9</option>
 						    <option value="12">12</option>
+						    <option value="15">15</option>
+								<option value="18">18</option>
 						    <option value="21">21</option>
-						    <option value="30">30</option>
+						    <option value="24">24</option>
+								<option value="27">27</option>
+								<option value="30">30</option>
 						  </select>
-						</form>
+						</div>
 						<small id="searchHelp" class="form-text text-muted text-left">Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</small>
 				  </div>
-				  <div class="card-body blackText">
+				  <div class="card-body blackText overflow-auto">
 						<div class="container" id="container">
 						</div>
 				  </div>
