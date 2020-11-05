@@ -38,42 +38,19 @@
 				<div class="card overflow-auto" style="height: 42rem;">
 				  <div class="card-header blackText">
 						<form class="form-inline">
-							<input class="form-control mr-sm-2" type="search" aria-describedby="searchHelp" placeholder="Search Location" style="width: 26rem;">
-							<button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+							<input class="form-control mr-sm-2" type="search" aria-describedby="searchHelp" placeholder="Search Location" style="width: 26rem;" id="Location">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="GetBusinesses">Search</button>
+							<label for="amount">Amount of results:</label>
+							<select name="amount" id="amount">
+						    <option value="12">12</option>
+						    <option value="21">21</option>
+						    <option value="30">30</option>
+						  </select>
 						</form>
 						<small id="searchHelp" class="form-text text-muted text-left">Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</small>
 				  </div>
 				  <div class="card-body blackText">
-						<div class="container">
-							<div class="row">
-								<div class="col">
-									<div class="card">
-										<img class="card-img-top" src="..." alt="Card image cap">
-										<div class="card-body">
-											<h5 class="card-title">Card title</h5>
-											<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Go somewhere</a>
-										</div>
-									</div>
-								</div>
-								<div class="col">
-									<div class="card">
-										<img class="card-img-top" src="..." alt="Card image cap">
-										<div class="card-body">
-											<h5 class="card-title">Card title</h5>
-											<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Go somewhere</a>
-										</div>
-									</div>
-								</div>
-								<div class="col">
-									<div class="card">
-										<img class="card-img-top" src="..." alt="Card image cap">
-										<div class="card-body">
-											<h5 class="card-title">Card title</h5>
-											<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Go somewhere</a>
-										</div>
-									</div>
-								</div>
-							</div>
+						<div class="container" id="container">
 						</div>
 				  </div>
 				</div>
@@ -81,27 +58,29 @@
 				</div>
 			</main>
 
-
-
 			<!-- Modal -->
-			<div class="modal fade blackText" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        SOME STUFF ABOUT THE BUSINESS
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			      </div>
-			    </div>
-			  </div>
+
+			<div id="modalList">
+				<div class="modal fade blackText" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="modalTitle">Modal title</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body" id="modalBody">
+				        SOME STUFF ABOUT THE BUSINESS
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
+
 
 
 			<footer class="mastfoot mt-auto">

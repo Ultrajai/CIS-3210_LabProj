@@ -59,13 +59,19 @@ def RequestData(host, path, api_key, url_params=None):
 
     return response.json()
 
-def SearchBusinesses(api_key, location):
+def SearchBusinesses(api_key, location, limit):
     url_params = {
         'location': location.replace(' ', '+'),
-        'limit': 20
+        'limit': limit
     }
 
     return RequestData(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
+
+def GetReviews(api_key, businessID):
+    path = '/v3/businesses/' #{id}/reviews
+    path += businessID
+    path += '/reviews'
+    return RequestData(API_HOST, path, api_key)
 
 @app.route('/')
 def Index(name=None):
@@ -75,7 +81,13 @@ def Index(name=None):
 def GetBusinesses(name=None):
     if request.method == 'POST':
         req = json.loads(json.dumps(request.get_json()))
-        return jsonify(SearchBusinesses(API_KEY, req['location']))
+        return jsonify(SearchBusinesses(API_KEY, req['location'], req['limit']))
+
+@app.route('/getReviews', methods = ['POST'])
+def Reviews(name=None):
+    if request.method == 'POST':
+        req = json.loads(json.dumps(request.get_json()))
+        return jsonify(GetReviews(API_KEY, req['ID']))
 """
 @app.route('/user', methods = ['DELETE', 'POST'])
 def Login(name=None):

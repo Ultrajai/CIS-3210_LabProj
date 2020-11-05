@@ -1,3 +1,24 @@
+function loadReviews(element)
+{
+  $(element).hide()
+
+  $.ajax({
+    type: "POST",
+    url: '/getReviews',
+    data: JSON.stringify({ID: element.attributes['data-id'].value}),
+    dataType: 'json',
+    contentType: 'application/json',
+    success: function(response){
+      console.log(response)
+
+      $('#' +element.attributes['data-to'].value).empty();
+
+      for (var i = 0; i < response.reviews.length; i++) {
+        $('#' +element.attributes['data-to'].value).append('<blockquote class="blockquote text-center"><p class="mb-0">' + response.reviews[i].text + '</p><footer class="blockquote-footer">' + response.reviews[i].user.name + '(' + response.reviews[i].rating + ' Star Rating)</footer></blockquote>');
+      }
+
+  }});
+}
 
 $(document).ready(function () {
 
@@ -9,7 +30,7 @@ $(document).ready(function () {
   console.log("There are more ways to prevent attack but the best ways are to use prepared statements with parameterized queries or stored procedures.")
   console.log("this information was obtained at https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html")
 
-	$("#Login").click(function(event){
+	/*$("#Login").click(function(event){
 
     var data = {username : $("#username").val(), password : $("#password").val()}
 
@@ -36,17 +57,13 @@ $(document).ready(function () {
         }
   		});
     }
-	});
+	});*/
 
   $("#GetBusinesses").click(function(event){
 
-    var data = {location : $("#Location").val()}
+    let data = {location : $("#Location").val(), limit: $("#amount").val()}
 
-    if(data.location === "")
-    {
-      $("#RequestResult").html('The field is empty');
-    }
-    else{
+    if(!(data.location === "")){
       $.ajax({
   		  type: "POST",
   		  url: '/getBusinesses',
@@ -54,23 +71,54 @@ $(document).ready(function () {
         dataType: 'json',
         contentType: 'application/json',
   		  success: function(result){
+            let cards = [];
+            let rows = [];
+            let modals = [];
 
-            let table = '<table class="table table-striped table-dark"><thead><tr><th scope="col">Name</th><th scope="col">Location</th><th scope="col">Rating</th><th scope="col">Image</th></tr></thead><tbody>'
+            $("#container").empty();
+            $("#modalList").empty();
 
-            for (var i = 0; i < result.businesses.length; i++) {
-              const htmlString = '<tr><td>' + result.businesses[i].name + '</td><td>' + result.businesses[i].location.address1 + '</td><td>' + result.businesses[i].rating + '</td><td><img src="' + result.businesses[i].image_url + '" style="width:150px;height:150px;"></img></td></tr>';
+            for (let i = 0; i < result.businesses.length; i++) {
+              const cardHtml ='<div class="card"><img class="card-img-top" width="208" height="208" src="' + result.businesses[i].image_url + '" alt="Card image cap"><div class="card-body"><h5 class="card-title">' + result.businesses[i].name + '</h5><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal' + i + '">Reviews</a></div></div>';
+              let modalHtml = '<div class="modal fade blackText" id="modal' + i + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="modalTitle">' + result.businesses[i].name + '</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body" id="modalBody"><a type="button" class="btn btn-link" href="' + result.businesses[i].url + '">Yelp Page</a><h1>Reviews</h1><button type="button" class="btn btn-primary" onclick="loadReviews(this)" data-to="reviewBody' + i + '" data-id="' + result.businesses[i].id + '">Load Reviews</button><div id="reviewBody' + i + '"></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div>';
 
-              table = table + htmlString;
+              cards.push(cardHtml);
+              modals.push(modalHtml);
             }
 
-            table.concat('</tbody></table>');
-            $("#RequestResult").html(table);
+
+            for (let i = 0; i < cards.length;) {
+              let rowHtml = '<div class="card-deck">';
+              rowHtml = rowHtml + cards[i];
+
+              if((i + 1) < cards.length)
+              {
+                rowHtml = rowHtml + cards[i + 1];
+              }
+
+              if((i + 2) < cards.length)
+              {
+                rowHtml = rowHtml + cards[i + 2];
+              }
+
+              i = i + 3;
+              rowHtml = rowHtml + '</div>';
+              rows.push(rowHtml);
+            }
+
+            for (let i = 0; i < rows.length; i++) {
+              $("#container").append(rows[i]);
+            }
+
+            for (let i = 0; i < modals.length; i++) {
+              $("#modalList").append(modals[i]);
+            }
         }
   		});
     }
 	});
 
-  $("#Logout").click(function(event){
+  /*$("#Logout").click(function(event){
       $.ajax({
   		  type: "DELETE",
   		  url: '/user',
@@ -78,6 +126,6 @@ $(document).ready(function () {
           location.reload(true);
         }
   		});
-	});
+	});*/
 
 });
