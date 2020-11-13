@@ -26,11 +26,11 @@
 
 			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			    <ul class="navbar-nav mr-auto">
-			      <li class="nav-item active">
-			        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/userDirectory">User Directory </a>
+			        <a class="nav-link" href="/">Home </a>
+			      </li>
+			      <li class="nav-item active">
+			        <a class="nav-link" href="/userDirectory">User Directory <span class="sr-only">(current)</span></a>
 			      </li>
 			    </ul>
 			    <div class="form-inline my-2 my-lg-0">
@@ -52,33 +52,8 @@
 					<p class="lead">Type a location to get restaurants and other businesses near that location listed!</p>
 				</div>
 				<br>
-				<div class="card" style="height: 42rem;">
-				  <div class="card-header blackText">
-						<div class="form-inline">
-							<input class="form-control mr-sm-2" type="search" aria-describedby="searchHelp" placeholder="Search Location" style="width: 26rem;" id="Location">
-							<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="GetBusinesses">Search</button>
-							<label style="padding-left:20px;padding-right: 5px;" for="amount"># of results:</label>
-							<select name="amount" id="amount">
-								<option value="3">3</option>
-								<option value="6">6</option>
-						    <option value="9">9</option>
-						    <option value="12">12</option>
-						    <option value="15">15</option>
-								<option value="18">18</option>
-						    <option value="21">21</option>
-						    <option value="24">24</option>
-								<option value="27">27</option>
-								<option value="30">30</option>
-						  </select>
-						</div>
-						<small id="searchHelp" class="form-text text-muted text-left">Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</small>
-				  </div>
-				  <div class="card-body blackText overflow-auto">
-						<div class="container" id="container">
-						</div>
-				  </div>
-				</div>
-				<div>
+				<div id="accordion">
+
 				</div>
 			</main>
 
@@ -116,6 +91,7 @@
 
 		<script src="/js/jquery.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/directory.js"></script>
 		<script src="/js/init.js"></script>
 
 	</body>

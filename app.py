@@ -21,7 +21,7 @@ SEARCH_PATH = '/v3/businesses/search'
 app.secret_key = b'\x98!\x83G\xd9\xea\x9d\xb1$p\xb9\xec\xee0AJ'
 app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
 
-"""# establishes db connection and gets a cursor to start accepting inputs
+# establishes db connection and gets a cursor to start accepting inputs
 db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
                  user="ajai",
                  passwd="1015577",
@@ -31,9 +31,12 @@ c = db.cursor()
 # initialize the user table
 c.execute("DROP TABLE Users;")
 db.commit()
+c.execute("DROP TABLE UserFavourites;")
+db.commit()
 c.execute("CREATE TABLE Users (username VARCHAR(255) NOT NULL PRIMARY KEY, password VARCHAR(255) NOT NULL);")
-db.commit()"""
-
+db.commit()
+c.execute("CREATE TABLE UserFavourites (username VARCHAR(255) NOT NULL, favStoreID VARCHAR(255) NOT NULL);")
+db.commit()
 
 def RequestData(host, path, api_key, url_params=None):
     url_params = url_params or {}
@@ -57,14 +60,23 @@ def SearchBusinesses(api_key, location, limit):
     return RequestData(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
 
 def GetReviews(api_key, businessID):
-    path = '/v3/businesses/' #{id}/reviews
+    path = '/v3/businesses/'
     path += businessID
     path += '/reviews'
+    return RequestData(API_HOST, path, api_key)
+
+def GetOneBusi(api_key, businessID):
+    path = '/v3/businesses/'
+    path += businessID
     return RequestData(API_HOST, path, api_key)
 
 @app.route('/')
 def Index(name=None):
     return render_template('index.html', name=name)
+
+@app.route('/userDirectory')
+def Directory(name=None):
+    return render_template('userDirectory.html', name=name)
 
 @app.route('/getBusinesses', methods = ['POST'])
 def GetBusinesses(name=None):
@@ -77,8 +89,48 @@ def Reviews(name=None):
     if request.method == 'POST':
         req = json.loads(json.dumps(request.get_json()))
         return jsonify(GetReviews(API_KEY, req['ID']))
-"""
-@app.route('/user', methods = ['DELETE', 'POST'])
+
+@app.route('/getOneBusiness', methods = ['POST'])
+def OneBusiness(name=None):
+    if request.method == 'POST':
+        req = json.loads(json.dumps(request.get_json()))
+        return jsonify(GetOneBusi(API_KEY, req['ID']))
+
+@app.route('/favourite', methods = ['PUT', 'POST', 'DELETE'])
+def favourite(name=None):
+    if request.method == 'POST':
+        userPass = json.loads(json.dumps(request.get_json()))
+
+        if session['logged_in']:
+            error = c.execute('INSERT INTO UserFavourites VALUES (%s, %s)', (session['username'], userPass['storeID']))
+            db.commit()
+            message = 'added to favourites!'
+            return jsonify(message)
+        else:
+            message = 'Not Logged in to add favourites'
+            return jsonify(message)
+
+
+    elif request.method == 'DELETE':
+        userPass = json.loads(json.dumps(request.get_json()))
+
+        error = c.execute('DELETE FROM UserFavourites WHERE username = %s AND favStoreID = %s', (session['username'], userPass['storeID']))
+        db.commit()
+
+        message = 'removed from favourites!'
+        return jsonify(message)
+
+    elif request.method == 'PUT':
+        userPass = json.loads(json.dumps(request.get_json()))
+
+        error = c.execute('SELECT favStoreID FROM UserFavourites WHERE username = %s', (userPass['username'],))
+        results = c.fetchall()
+
+        message = 'Get favourites!'
+        return jsonify(message = message, ids = results)
+
+
+@app.route('/user', methods = ['DELETE', 'POST', 'GET'])
 def Login(name=None):
     if request.method == 'POST':
         userPass = json.loads(json.dumps(request.get_json()))
@@ -109,4 +161,9 @@ def Login(name=None):
         session.clear()
         message = 'Logged out!'
         return jsonify(message)
-"""
+    elif request.method == 'GET':
+        error = c.execute('SELECT username FROM Users')
+        results = c.fetchall()
+
+        message = 'got users!'
+        return jsonify(message = message, users = results)
