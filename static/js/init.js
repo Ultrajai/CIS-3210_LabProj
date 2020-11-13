@@ -1,4 +1,5 @@
 const favourited = [];
+let user = '';
 
 function loadReviews(element)
 {
@@ -65,23 +66,18 @@ $(document).ready(function () {
   console.log("There are more ways to prevent attack but the best ways are to use prepared statements with parameterized queries or stored procedures.")
   console.log("this information was obtained at https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html")*/
 
-  if($('#user').text() != '')
-  {
-    $.ajax({
-      type: "POST",
-      url: '/getfavourite',
-      data: JSON.stringify({username: $('#user').text()}),
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function(response){
-        for (var i = 0; i < response.ids.length; i++) {
-          favourited.push(response.ids[i].id);
-        }
+  $.ajax({
+    type: "PUT",
+    url: '/favourite',
+    data: JSON.stringify({username: user}),
+    dataType: 'json',
+    contentType: 'application/json',
+    success: function(response){
+      for (var i = 0; i < response.ids.length; i++) {
+        favourited.push(response.ids[i][0]);
       }
-    });
-  }
-
-
+    }
+  });
 
 	$("#Login").click(function(event){
 
