@@ -104,7 +104,7 @@ def favourite(name=None):
     if request.method == 'POST':
         userPass = json.loads(json.dumps(request.get_json()))
 
-        if session['logged_in']:
+        if session.get('logged_in'):
             db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
                              user="ajai",
                              passwd="1015577",

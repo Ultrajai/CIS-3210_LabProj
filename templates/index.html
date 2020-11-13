@@ -39,7 +39,7 @@
 						<input id="password" class="form-control mr-sm-2" type="Password" placeholder="Password" aria-label="Password">
 			      <button id="Login" class="btn btn-outline-success my-2 my-sm-0" type="button">Login</button>
 						{% else %}
-						Welcome <span id="user">{{ session['username'] }}</span>!
+						<div class="my-2 my-sm-0" style="padding-right:5px">Welcome {{ session['username'] }}!<span hidden id="user">{{ session['username'] }}</span></div>
 						<button id="Logout" class="btn btn-outline-success my-2 my-sm-0" type="button">Logout</button>
 						{% endif %}
 			    </div>
