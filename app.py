@@ -38,6 +38,9 @@ db.commit()
 c.execute("CREATE TABLE UserFavourites (username VARCHAR(255) NOT NULL, favStoreID VARCHAR(255) NOT NULL);")
 db.commit()
 
+c.close()
+db.close()
+
 def RequestData(host, path, api_key, url_params=None):
     url_params = url_params or {}
     url = '{0}{1}'.format(host, quote(path.encode('utf8')))
@@ -102,8 +105,15 @@ def favourite(name=None):
         userPass = json.loads(json.dumps(request.get_json()))
 
         if session['logged_in']:
+            db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                             user="ajai",
+                             passwd="1015577",
+                             db="ajai")
+            c = db.cursor()
             error = c.execute('INSERT INTO UserFavourites VALUES (%s, %s)', (session['username'], userPass['storeID']))
             db.commit()
+            c.close()
+            db.close()
             message = 'added to favourites!'
             return jsonify(message)
         else:
@@ -113,18 +123,30 @@ def favourite(name=None):
 
     elif request.method == 'DELETE':
         userPass = json.loads(json.dumps(request.get_json()))
-
+        db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                         user="ajai",
+                         passwd="1015577",
+                         db="ajai")
+        c = db.cursor()
         error = c.execute('DELETE FROM UserFavourites WHERE username = %s AND favStoreID = %s', (session['username'], userPass['storeID']))
         db.commit()
+        c.close()
+        db.close()
 
         message = 'removed from favourites!'
         return jsonify(message)
 
     elif request.method == 'PUT':
         userPass = json.loads(json.dumps(request.get_json()))
-
+        db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                         user="ajai",
+                         passwd="1015577",
+                         db="ajai")
+        c = db.cursor()
         error = c.execute('SELECT favStoreID FROM UserFavourites WHERE username = %s', (userPass['username'],))
         results = c.fetchall()
+        c.close()
+        db.close()
 
         message = 'Get favourites!'
         return jsonify(message = message, ids = results)
@@ -134,6 +156,11 @@ def favourite(name=None):
 def Login(name=None):
     if request.method == 'POST':
         userPass = json.loads(json.dumps(request.get_json()))
+        db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                         user="ajai",
+                         passwd="1015577",
+                         db="ajai")
+        c = db.cursor()
 
         error = c.execute('INSERT IGNORE INTO Users VALUES (%s, %s)', (userPass['username'], userPass['password']))
         db.commit()
@@ -153,6 +180,8 @@ def Login(name=None):
             session['username'] = userPass['username']
             session['logged_in'] = True
 
+        c.close()
+        db.close()
 
         return jsonify(message = message, error = 0)
     elif request.method == 'DELETE':
@@ -162,8 +191,17 @@ def Login(name=None):
         message = 'Logged out!'
         return jsonify(message)
     elif request.method == 'GET':
+        db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                         user="ajai",
+                         passwd="1015577",
+                         db="ajai")
+        c = db.cursor()
+
         error = c.execute('SELECT username FROM Users')
         results = c.fetchall()
+
+        c.close()
+        db.close()
 
         message = 'got users!'
         return jsonify(message = message, users = results)

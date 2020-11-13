@@ -1,5 +1,4 @@
 const favourited = [];
-let user = '';
 
 function loadReviews(element)
 {
@@ -69,7 +68,7 @@ $(document).ready(function () {
   $.ajax({
     type: "PUT",
     url: '/favourite',
-    data: JSON.stringify({username: user}),
+    data: JSON.stringify({username: $('#user').text()}),
     dataType: 'json',
     contentType: 'application/json',
     success: function(response){
