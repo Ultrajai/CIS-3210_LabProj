@@ -21,22 +21,9 @@ SEARCH_PATH = '/v3/businesses/search'
 app.secret_key = b'\x98!\x83G\xd9\xea\x9d\xb1$p\xb9\xec\xee0AJ'
 app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
 
-# establishes db connection and gets a cursor to start accepting inputs
-db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
-                 user="ajai",
-                 passwd="1015577",
-                 db="ajai")
-c = db.cursor()
-
-# initialize the user table
-c.execute("DROP TABLE Users;")
-db.commit()
-c.execute("DROP TABLE UserFavourites;")
-db.commit()
-c.execute("CREATE TABLE Users (username VARCHAR(255) NOT NULL PRIMARY KEY, password VARCHAR(255) NOT NULL);")
-db.commit()
-c.execute("CREATE TABLE UserFavourites (username VARCHAR(255) NOT NULL, favStoreID VARCHAR(255) NOT NULL);")
-db.commit()
+# data
+Users = []
+UserFavourites = []
 
 def RequestData(host, path, api_key, url_params=None):
     url_params = url_params or {}
@@ -96,52 +83,55 @@ def OneBusiness(name=None):
         req = json.loads(json.dumps(request.get_json()))
         return jsonify(GetOneBusi(API_KEY, req['ID']))
 
-@app.route('/favourite', methods = ['PUT', 'POST', 'DELETE'])
+@app.route('/getfavourite', methods = ['POST'])
+def getfavourite(name=None):
+    if request.method == 'POST':
+        userPass = json.loads(json.dumps(request.get_json()))
+
+        results = list(filter(lambda item: item['username'] == userPass['username'], UserFavourites))
+
+        print(results)
+
+        message = 'Get favourites!'
+        return jsonify(message = message, ids = results)
+
+@app.route('/favourite', methods = ['POST', 'DELETE'])
 def favourite(name=None):
     if request.method == 'POST':
         userPass = json.loads(json.dumps(request.get_json()))
 
         if session['logged_in']:
-            error = c.execute('INSERT INTO UserFavourites VALUES (%s, %s)', (session['username'], userPass['storeID']))
-            db.commit()
+            UserFavourites.append({'username': session['username'], 'id': userPass['storeID']})
             message = 'added to favourites!'
             return jsonify(message)
         else:
             message = 'Not Logged in to add favourites'
             return jsonify(message)
-
-
     elif request.method == 'DELETE':
         userPass = json.loads(json.dumps(request.get_json()))
 
-        error = c.execute('DELETE FROM UserFavourites WHERE username = %s AND favStoreID = %s', (session['username'], userPass['storeID']))
-        db.commit()
+        UserFavourites.remove({'username': session['username'], 'id': userPass['storeID']})
+
+        print(UserFavourites)
 
         message = 'removed from favourites!'
         return jsonify(message)
-
-    elif request.method == 'PUT':
-        userPass = json.loads(json.dumps(request.get_json()))
-
-        error = c.execute('SELECT favStoreID FROM UserFavourites WHERE username = %s', (userPass['username'],))
-        results = c.fetchall()
-
-        message = 'Get favourites!'
-        return jsonify(message = message, ids = results)
 
 
 @app.route('/user', methods = ['DELETE', 'POST', 'GET'])
 def Login(name=None):
     if request.method == 'POST':
         userPass = json.loads(json.dumps(request.get_json()))
+        message= ''
 
-        error = c.execute('INSERT IGNORE INTO Users VALUES (%s, %s)', (userPass['username'], userPass['password']))
-        db.commit()
+        if {'username': userPass['username'], 'password': userPass['password']} not in Users:
+            Users.append({'username': userPass['username'], 'password': userPass['password']})
 
-        if error == 0:
-            error = c.execute('SELECT * FROM Users WHERE username = %s AND password = %s', (userPass['username'], userPass['password']))
+        if {'username' : userPass['username'], 'password': userPass['password']} in Users:
 
-            if error == 0:
+            results = list(filter(lambda item: item['username'] == userPass['username'], Users))
+
+            if results[0]['password'] != userPass['password']:
                 message = "Error: Couldn't sign in due to bad password"
                 return jsonify(message = message, error = 1)
             else:
@@ -162,8 +152,5 @@ def Login(name=None):
         message = 'Logged out!'
         return jsonify(message)
     elif request.method == 'GET':
-        error = c.execute('SELECT username FROM Users')
-        results = c.fetchall()
-
         message = 'got users!'
-        return jsonify(message = message, users = results)
+        return jsonify(message = message, users = Users)
