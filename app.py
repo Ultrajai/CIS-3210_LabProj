@@ -123,18 +123,23 @@ def favourite(name=None):
 
     elif request.method == 'DELETE':
         userPass = json.loads(json.dumps(request.get_json()))
-        db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
-                         user="ajai",
-                         passwd="1015577",
-                         db="ajai")
-        c = db.cursor()
-        error = c.execute('DELETE FROM UserFavourites WHERE username = %s AND favStoreID = %s', (session['username'], userPass['storeID']))
-        db.commit()
-        c.close()
-        db.close()
 
-        message = 'removed from favourites!'
-        return jsonify(message)
+        if session.get('logged_in'):
+            db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                             user="ajai",
+                             passwd="1015577",
+                             db="ajai")
+            c = db.cursor()
+            error = c.execute('DELETE FROM UserFavourites WHERE username = %s AND favStoreID = %s', (session['username'], userPass['storeID']))
+            db.commit()
+            c.close()
+            db.close()
+
+            message = 'removed from favourites!'
+            return jsonify(message)
+        else:
+            message = 'Not Logged in to remove favourites'
+            return jsonify(message)
 
     elif request.method == 'PUT':
         userPass = json.loads(json.dumps(request.get_json()))
