@@ -93,6 +93,31 @@ def Reviews(name=None):
         req = json.loads(json.dumps(request.get_json()))
         return jsonify(GetReviews(API_KEY, req['ID']))
 
+@app.route('/getOtherLikedLocations', methods = ['POST'])
+def OtherLikedLocations(name=None):
+    if request.method == 'POST':
+        req = json.loads(json.dumps(request.get_json()))
+        IDs = []
+
+        db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                         user="ajai",
+                         passwd="1015577",
+                         db="ajai")
+        c = db.cursor()
+
+        error = c.execute('SELECT username FROM UserFavourites WHERE favStoreID = %s', (req['ID'],))
+        results = c.fetchall()
+
+        for username in results:
+            error = c.execute('SELECT favStoreID FROM UserFavourites WHERE username = %s', (username,))
+            locationIDs = c.fetchall()
+            IDs.extend(locationIDs)
+
+        c.close()
+        db.close()
+
+        return jsonify(ids = IDs)
+
 @app.route('/getOneBusiness', methods = ['POST'])
 def OneBusiness(name=None):
     if request.method == 'POST':
@@ -155,7 +180,6 @@ def favourite(name=None):
 
         message = 'Get favourites!'
         return jsonify(message = message, ids = results)
-
 
 @app.route('/user', methods = ['DELETE', 'POST', 'GET'])
 def Login(name=None):
