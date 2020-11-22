@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="shortcut icon" href="#">
-		<title>CIS*3210 Lab 9</title>
+		<title>CIS*3210 Lab 10</title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
 	<body class="text-center">
 		<div class="d-flex w-100 h-100 p-3 mx-auto flex-column" style="max-width: 60em;">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			  <a class="navbar-brand" href="#">Navbar</a>
+			  <a class="navbar-brand" href="#">Lab 10</a>
 			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			    <span class="navbar-toggler-icon"></span>
 			  </button>
@@ -37,7 +37,7 @@
 						{% if not session['logged_in'] %}
 			      <input id="username" class="form-control mr-sm-2" type="Username" placeholder="Username" aria-label="Username">
 						<input id="password" class="form-control mr-sm-2" type="Password" placeholder="Password" aria-label="Password">
-			      <button id="Login" class="btn btn-outline-success my-2 my-sm-0" type="button">Login</button>
+			      <button id="Login" class="btn btn-outline-success my-2 my-sm-0" type="button">Sign-Up/Login</button>
 						{% else %}
 						<div class="my-2 my-sm-0" style="padding-right:5px">Welcome {{ session['username'] }}!<span hidden id="user">{{ session['username'] }}</span></div>
 						<button id="Logout" class="btn btn-outline-success my-2 my-sm-0" type="button">Logout</button>
@@ -47,7 +47,7 @@
 			</nav>
 
 			<main role="main" class="inner cover">
-				<h1 class="cover-heading">CIS*3210 Lab 9</h1>
+				<h1 class="cover-heading" style="padding-top: 10px;">CIS*3210 Lab 10</h1>
 				<div>
 					<p class="lead">Take a look at what other users like!</p>
 				</div>

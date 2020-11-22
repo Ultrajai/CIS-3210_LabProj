@@ -15,13 +15,24 @@ function OtherLocations(element)
     contentType: 'application/json',
     success: async function(response){
 
+      data = [];
+
+      for (var i = 0; i < response.ids.length; i++) {
+        if(!data.some(function(val){ return val.id === response.ids[i][0] && val.num == response.ids.filter(function(item){ return item[0] == response.ids[i][0]; }).length }))
+        {
+          data.push({id: response.ids[i][0], num: response.ids.filter(function(item){ return item[0] == response.ids[i][0]; }).length});
+        }
+      }
+
+      data.sort(function(a, b){ return b.num - a.num });
+
       let cards = [];
       let rows = [];
       let modals = [];
 
-      for (var i = 0; i < response.ids.length; i++) {
+      for (var i = 0; i < data.length; i++) {
 
-        id = response.ids[i][0];
+        id = data[i].id;
 
         if(id != element.attributes['data-id'].value)
         {
@@ -32,7 +43,7 @@ function OtherLocations(element)
             dataType: 'json',
             contentType: 'application/json',
             success: function(result){
-              if(modalNum)
+              if(typeof modalNum !== 'undefined')
               {
                 const cardHtml ='<div class="card blackText"><img class="card-img-top" width="208" height="208" src="' + result.image_url + '" alt="Card image cap"><div class="card-body"><h5 class="card-title">' + result.name + '</h5><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal' + modalNum + i + '">Reviews</a></div></div>';
 
@@ -60,7 +71,7 @@ function OtherLocations(element)
       numModals += response.ids.length;
 
       for (let j = 0; j < cards.length;) {
-        let rowHtml = '<div class="card-deck">';
+        let rowHtml = '<div class="card-columns">';
         rowHtml = rowHtml + cards[j];
 
         if((j + 1) < cards.length)
@@ -250,7 +261,7 @@ $(document).ready(function () {
 
 
             for (let i = 0; i < cards.length;) {
-              let rowHtml = '<div class="card-deck">';
+              let rowHtml = '<div class="card-columns">';
               rowHtml = rowHtml + cards[i];
 
               if((i + 1) < cards.length)

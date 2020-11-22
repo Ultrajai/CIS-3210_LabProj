@@ -64,7 +64,7 @@ function loadFavourites(element){
       modalNum += response.ids.length;
 
       for (let j = 0; j < cards.length;) {
-        let rowHtml = '<div class="card-deck">';
+        let rowHtml = '<div class="card-columns">';
         rowHtml = rowHtml + cards[j];
 
         if((j + 1) < cards.length)
