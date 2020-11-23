@@ -109,7 +109,7 @@ def OtherLikedLocations(name=None):
         results = c.fetchall()
 
         for username in results:
-            error = c.execute('SELECT favStoreID FROM UserFavourites WHERE username = %s', (username,))
+            error = c.execute('SELECT favStoreID FROM UserFavourites WHERE username = %s', (username[0],))
             locationIDs = c.fetchall()
             IDs.extend(locationIDs)
 
