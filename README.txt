@@ -3,14 +3,10 @@ How to run/access:
     2) Access the website at CIS*3210.socs.uoguelph.ca:15577
 
 Added Features:
-  - A favourite button on all restaurants
-  - you can only save favourites when logged in
-      - favouriting without an account literally does nothing
-  - You can then take a look at a page called user directory where all user favourited
-    restaurants are displayed
-      - you must click load favourites in the accordion if you want to view
-  - Any instance of a business you have favourited will be displayed as favourited already
-  - Unfavouriting is as simple as clicking the favourite button again
+  - You can now see what other places people liked who like a specific restaurant
+  - Displays in another popup where the most liked among the people who liked the same store is displayed at the top
+  - Added sign-in error message
+  - A few other quality of life improvements
 
 Issue to look out for:
   - The API used may not always respond and so an error will be displayed in the console
